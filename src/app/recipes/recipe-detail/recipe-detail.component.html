@@ -1,1 +1,24 @@
-<p>recipe-detail works!</p>
+<div class="row" *ngIf="recipe.name; else noRecipe">
+    <div class="col-12">
+        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid">
+    </div>
+    <div class="col-12 mt-3 bg-light">
+        <h1><span class="text-muted">recipe name: </span> {{ recipe.name }}</h1>
+        <p>Description: {{ recipe.description }}</p>
+    </div>
+    <div class="col-12">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Manage Recipe
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">To Shopping List</a></li>
+              <li><a class="dropdown-item" href="#">Edit Recipe</a></li>
+              <li><a class="dropdown-item" href="#">Delete Recipe</a></li>
+            </ul>
+          </div>
+    </div>
+</div>
+<ng-template #noRecipe>
+    <h1 class="display-6 mt-2 text-center bg-light py-4 shadow">Select a recipe to see its details.</h1>
+</ng-template>
