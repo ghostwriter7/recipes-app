@@ -11,15 +11,14 @@ export class ShoppingEditComponent implements OnInit {
   @Input() set item(item: Ingredient) {
     this._item = item;
   }
-  
+
+  ngOnInit(): void {
+      
+  }
+
   _item: Ingredient = {
     name: '',
     quantity: 0
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
   }
 
 }

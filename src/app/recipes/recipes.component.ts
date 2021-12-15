@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Recipe } from './recipe.model';
 
 @Component({
@@ -12,9 +12,11 @@ export class RecipesComponent implements OnInit {
     description: '',
     imagePath: ''
   };
+
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
   onNewRecipe(recipe: Recipe) {

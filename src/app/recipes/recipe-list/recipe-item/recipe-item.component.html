@@ -1,1 +1,17 @@
-<p>recipe-item works!</p>
+<div class="col-12 col-md-5 mx-auto col-lg-12 card my-3 text-dark bg-warning border-dark">
+        <img 
+            [src]="recipe.imagePath"
+            class="card-img-top" 
+            style="max-height: 100px; object-fit: cover;"
+            alt="{{ recipe.name }}"
+        >
+        <div class="card-body d-flex justify-content-between">
+            <div>
+                <h5 class="card-title">{{ recipe.name }}</h5>
+                <p class="card-text">{{ recipe.description }}</p>
+            </div>
+            <div>
+                <a href="#" class="btn btn-outline-dark" (click)="onDetailsClick()">Details</a>
+            </div>
+        </div>
+</div>

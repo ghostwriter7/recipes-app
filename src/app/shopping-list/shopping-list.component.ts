@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Ingredient } from '../shared/ingredients.model';
 
 @Component({
@@ -17,9 +17,7 @@ export class ShoppingListComponent implements OnInit {
     quantity: 0
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit(): void {    
   }
 
   onItemClick(item: Ingredient) {

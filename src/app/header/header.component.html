@@ -6,8 +6,25 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Shopping List</a>
-          <a class="nav-link" href="#">Recipes</a>
+          <a 
+            class="nav-link" 
+            aria-current="page" 
+            href="#" 
+            data-target="shoppingList"
+            [ngClass]="{active: currentPage === 'shoppingList'}"
+            (click)="onSelect('shoppingList')"
+            >
+            Shopping List
+          </a>
+          <a 
+            class="nav-link" 
+            href="#" 
+            data-target="recipes"
+            [ngClass]="{active: currentPage === 'recipes'}"
+            (click)="onSelect('recipes')"
+            >
+            Recipes
+          </a>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Link
