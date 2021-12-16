@@ -4,18 +4,18 @@
     <div class="col-12 col-md-6">
         <h3 class="mb-3">Shopping List:</h3>
         <ul class="list-group">
-            <li 
-                class="list-group-item d-flex justify-content-between" 
-                *ngFor="let item of ingredients" 
+            <li
+                class="list-group-item d-flex justify-content-between"
+                *ngFor="let item of ingredients"
                 (click)="onItemClick(item)"
                 style="cursor: pointer;"
-                [ngClass]="{ active: item === selectedIngredient }"
+                [ngClass]="{ active: item === selectedItem }"
             >
                 {{ item.name }} <span>Quantity: {{ item.quantity }}</span>
             </li>
         </ul>
     </div>
     <div class="col-12 col-md-5">
-        <app-shopping-edit [item]="selectedIngredient" ></app-shopping-edit>
+        <app-shopping-edit></app-shopping-edit>
     </div>
 </div>

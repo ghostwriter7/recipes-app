@@ -7,20 +7,9 @@ import { Recipe } from './recipe.model';
   styleUrls: ['./recipes.component.css']
 })
 export class RecipesComponent implements OnInit {
-  currentRecipe: Recipe = {
-    name: '',
-    description: '',
-    imagePath: ''
-  };
-
   constructor() { }
 
   ngOnInit(): void {
 
   }
-
-  onNewRecipe(recipe: Recipe) {
-    this.currentRecipe = recipe;
-  }
-
 }
