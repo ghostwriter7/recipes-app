@@ -1,14 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+import { ActivatedRoute, Router, Data } from '@angular/router';
+import { CanComponentDeactivate } from './can-deactivate-guard.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css'],
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit, CanComponentDeactivate {
   recipe: Recipe = {
     name: '',
     description: '',
@@ -16,15 +19,34 @@ export class RecipeDetailComponent implements OnInit {
     ingredients: []
   };
 
-  constructor(private recipeService: RecipeService) { }
+  addedToShoppingCart: boolean = false;
+
+  constructor(private recipeService: RecipeService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.recipeService.onRecipeSelected.subscribe(recipe => {
-      this.recipe = recipe;
-    })
+    // this.recipe = this.recipeService.getRecipe(this.route.snapshot.params['id']) ?? { name: '',
+    //   description: '',
+    //   imagePath: '',
+    //   ingredients: [] }
+    this.route.data
+      .subscribe((data: Data) => {
+        this.recipe = data['recipe'];
+      })
   }
 
   onAddToShopList() {
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+    this.addedToShoppingCart = true;
+    this.router.navigate(['/shopping-list']);
+  }
+
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.addedToShoppingCart) {
+      return true;
+    } else {
+      return confirm('Are you sure you want to leave?');
+    }
   }
 }

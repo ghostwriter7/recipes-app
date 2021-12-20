@@ -1,6 +1,7 @@
 <div class="row" *ngIf="recipe.name; else noRecipe">
     <div class="col-12">
-        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid">
+        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid"
+        style="max-height: 50vh;">
     </div>
     <div class="col-12 mt-3">
         <h1><span class="text-muted">recipe name: </span> {{ recipe.name }}</h1>
@@ -23,9 +24,9 @@
               Manage Recipe
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#" (click)="onAddToShopList()">To Shopping List</a></li>
-              <li><a class="dropdown-item" href="#">Edit Recipe</a></li>
-              <li><a class="dropdown-item" href="#">Delete Recipe</a></li>
+              <li><a class="dropdown-item" (click)="onAddToShopList()">To Shopping List</a></li>
+              <li><a class="dropdown-item" >Edit Recipe</a></li>
+              <li><a class="dropdown-item" >Delete Recipe</a></li>
             </ul>
           </div>
     </div>

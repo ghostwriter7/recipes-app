@@ -33,7 +33,10 @@ export class RecipeService {
     return [...this.recipes];
   }
 
-  onRecipeSelected = new EventEmitter<Recipe>();
+  getRecipe(id: string): Recipe {
+    // @ts-ignore
+    return this.recipes.find(el => el.name === id);
+  }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shopService.addIngredients(ingredients);

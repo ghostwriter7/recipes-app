@@ -1,7 +1,7 @@
-<div class="col-12 col-md-5 mx-auto col-lg-12 card my-3 text-dark bg-warning border-dark">
-        <img 
+<div class="mx-auto card my-3 text-dark bg-warning border-dark">
+        <img
             [src]="recipe.imagePath"
-            class="card-img-top" 
+            class="card-img-top"
             style="max-height: 100px; object-fit: cover;"
             alt="{{ recipe.name }}"
         >
@@ -11,7 +11,7 @@
                 <p class="card-text">{{ recipe.description }}</p>
             </div>
             <div>
-                <a href="#" class="btn btn-outline-dark" (click)="onDetailsClick()">Details</a>
+                <a href="#" class="btn btn-outline-dark" routerLink="/recipe/{{ recipe.name }}">Details</a>
             </div>
         </div>
 </div>
