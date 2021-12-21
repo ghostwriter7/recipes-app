@@ -1,4 +1,4 @@
-<div class="mx-auto card my-3 text-dark bg-warning border-dark">
+<div class="mx-auto card my-3 text-dark bg-light">
         <img
             [src]="recipe.imagePath"
             class="card-img-top"
@@ -11,7 +11,10 @@
                 <p class="card-text">{{ recipe.description }}</p>
             </div>
             <div>
-                <a href="#" class="btn btn-outline-dark" routerLink="/recipe/{{ recipe.name }}">Details</a>
+                <a class="btn btn-outline-dark"
+                   [routerLink]="[recipe.name]"
+                   routerLinkActive="active"
+                >Details</a>
             </div>
         </div>
 </div>

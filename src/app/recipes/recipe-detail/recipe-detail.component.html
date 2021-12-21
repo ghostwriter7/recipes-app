@@ -1,36 +1,29 @@
-<div class="row" *ngIf="recipe.name; else noRecipe">
-    <div class="col-12">
-        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid"
-        style="max-height: 50vh;">
+<div class="row" *ngIf="recipe">
+    <div class="col-12 col-md-6 p-3">
+        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-fluid img-thumbnail shadow">
     </div>
-    <div class="col-12 mt-3">
-        <h1><span class="text-muted">recipe name: </span> {{ recipe.name }}</h1>
-        <p>Description: {{ recipe.description }}</p>
-    </div>
-    <div class="col-12 mt-3">
-      <h2><span class="text-muted">ingredients:</span></h2>
+    <div class="col-12 col-md-6 mt-3">
+        <h1 class="bg-light p-2 ps-5 rounded shadow shadow-sm text-success text-uppercase"><span class="text-lowercase text-muted small">recipe name: </span> {{ recipe.name }}</h1>
+        <p class="bg-secondary p-1 rounded shadow shadow-sm text-light lead px-3 ms-3" >Description: {{ recipe.description }}</p>
+      <h4 class="text-muted bg-light px-3 py-2 rounded shadow shadow-sm my-3 d-inline-block">ingredients:</h4>
       <ul>
         <li
-          class="list-group-item"
+          class="list-group-item bg-secondary text-light text-uppercase"
+          appListHighlight
           *ngFor="let item of recipe.ingredients"
         >
           {{ item.name }} ({{ item.quantity }})
         </li>
       </ul>
-    </div>
-    <div class="col-12">
         <div class="dropdown" appDropdown dropDownId="dropdownMenuButton1">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               Manage Recipe
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" (click)="onAddToShopList()">To Shopping List</a></li>
-              <li><a class="dropdown-item" >Edit Recipe</a></li>
+              <li><a class="dropdown-item" [routerLink]="['edit']">Edit Recipe</a></li>
               <li><a class="dropdown-item" >Delete Recipe</a></li>
             </ul>
           </div>
     </div>
 </div>
-<ng-template #noRecipe>
-    <h1 class="display-6 mt-2 text-center bg-light py-4 shadow">Select a recipe to see its details.</h1>
-</ng-template>
