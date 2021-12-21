@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { Subscription} from 'rxjs';
 
 import { Ingredient } from '../../shared/ingredients.model';
 import { ShoppingListService } from '../shopping-list.service';
@@ -8,8 +9,9 @@ import { ShoppingListService } from '../shopping-list.service';
   templateUrl: './shopping-edit.component.html',
   styleUrls: ['./shopping-edit.component.css']
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent implements OnInit, OnDestroy {
   item: Ingredient = { name: '', quantity: 0 };
+  private subscription!: Subscription;
 
   @ViewChild('name') name!: ElementRef;
   @ViewChild('quantity') quantity!: ElementRef;
@@ -17,9 +19,13 @@ export class ShoppingEditComponent implements OnInit {
   constructor(private shopService: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.shopService.itemClick.subscribe(item => {
+    this.subscription = this.shopService.itemClick.subscribe(item => {
       this.item = item;
     })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onAddItem() {
@@ -28,9 +34,6 @@ export class ShoppingEditComponent implements OnInit {
         name: this.name.nativeElement.value,
         quantity: +this.quantity.nativeElement.value
       })
-
-      // this.name.nativeElement.value = '';
-      // this.quantity.nativeElement.value = '';
     }
   }
 }
