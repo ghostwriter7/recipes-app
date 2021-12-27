@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Recipe } from './recipe.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Ingredient } from '../shared/ingredients.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,19 +27,29 @@ export class RecipeService {
     }
   ];
 
-  constructor(private shopService: ShoppingListService) {
-  }
+  distributeRecipes = new BehaviorSubject<Recipe[]>(this.recipes);
 
-  getRecipes() {
-    return [...this.recipes];
-  }
+  constructor(private shopService: ShoppingListService) {}
 
-  getRecipe(id: string): Recipe {
-    // @ts-ignore
-    return this.recipes.find(el => el.name === id);
+  getRecipe(name: string): Recipe {
+    return this.recipes.find(el => el.name === name)!;
   }
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shopService.addIngredients(ingredients);
+  }
+
+  updateRecipe(name: string, newRecipe: Recipe) {
+    this.recipes[this.recipes.findIndex(recipe => recipe.name === name)] = newRecipe;
+    this.distributeRecipes.next(this.recipes.slice());
+  }
+
+  addRecipe(newRecipe: Recipe) {
+    this.recipes.push(newRecipe);
+    this.distributeRecipes.next(this.recipes.slice());
+  }
+
+  deleteRecipe(name: string) {
+    this.recipes.splice((this.recipes.findIndex(recipe => recipe.name === name)), 1);
   }
 }

@@ -6,8 +6,8 @@
         <ul class="list-group">
             <li
                 class="list-group-item d-flex justify-content-between"
-                *ngFor="let item of ingredients"
-                (click)="onItemClick(item)"
+                *ngFor="let item of ingredients; let i = index"
+                (click)="onItemEdit(item, i)"
                 style="cursor: pointer;"
                 [ngClass]="{ active: item === selectedItem }"
             >

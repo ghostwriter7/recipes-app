@@ -10,26 +10,32 @@ import { ShoppingListService } from './shopping-list.service';
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
   private subscription!: Subscription;
+  private itemSelectedSubscription!: Subscription;
   ingredients: Ingredient[] = [];
-  selectedItem?: Ingredient;
+  selectedItem?: Ingredient | null
 
   constructor(private shopService: ShoppingListService) {
   }
 
   ngOnInit(): void {
-    this.ingredients = this.shopService.getIngredients();
-    this.subscription = this.shopService.ingredientsChanged
+    this.subscription = this.shopService.ingredientsEmitter
       .subscribe((ingredients: Ingredient[]) => {
         this.ingredients = ingredients;
-      })
+      });
+    this.itemSelectedSubscription = this.shopService.ingredientSelected.subscribe(value => {
+      if (value === -1) {
+        this.selectedItem = null;
+      }
+    });
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.itemSelectedSubscription.unsubscribe();
   }
 
-  onItemClick(item: Ingredient) {
-    this.shopService.itemClick.next(item);
+  onItemEdit(item: Ingredient, index: number) {
+    this.shopService.ingredientSelected.next(index);
     this.selectedItem = item;
   }
 }

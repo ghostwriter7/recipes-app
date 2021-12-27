@@ -1,0 +1,22 @@
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+  border: 3px solid red;
+}
+
+input.ng-valid.ng-touched, select.ng-valid.ng-touched {
+  border: 3px solid green;
+}
+
+.invalid-data,
+.valid-data {
+  margin-top: 5px;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.invalid-data {
+  color: red;
+}
+
+.valid-data {
+  color: green;
+}

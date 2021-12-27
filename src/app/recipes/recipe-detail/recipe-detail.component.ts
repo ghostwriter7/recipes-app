@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
-import { ActivatedRoute, Router, Data } from '@angular/router';
+import { ActivatedRoute, Router, Data, Params } from '@angular/router';
 import { CanComponentDeactivate } from './can-deactivate-guard.service';
 import { Observable } from 'rxjs';
 
@@ -26,14 +26,9 @@ export class RecipeDetailComponent implements OnInit, CanComponentDeactivate {
               private router: Router) { }
 
   ngOnInit(): void {
-    // this.recipe = this.recipeService.getRecipe(this.route.snapshot.params['id']) ?? { name: '',
-    //   description: '',
-    //   imagePath: '',
-    //   ingredients: [] }
-    this.route.data
-      .subscribe((data: Data) => {
-        this.recipe = data['recipe'];
-      })
+    this.route.params.subscribe((params: Params) => {
+      this.recipe = this.recipeService.getRecipe(params['id']);
+    });
   }
 
   onAddToShopList() {
@@ -48,5 +43,10 @@ export class RecipeDetailComponent implements OnInit, CanComponentDeactivate {
     } else {
       return confirm('Are you sure you want to leave?');
     }
+  }
+
+  onRecipeDelete() {
+    this.recipeService.deleteRecipe(this.route.snapshot.params['id']);
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

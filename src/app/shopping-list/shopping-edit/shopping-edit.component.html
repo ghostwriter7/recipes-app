@@ -1,4 +1,4 @@
-<form>
+<form (ngSubmit)="onAddItem()" #form="ngForm">
     <div class="row mb-3">
       <div class="col-9">
           <label
@@ -10,11 +10,14 @@
           <input
             type="text"
             name="name"
-            [(ngModel)]="item.name"
+            ngModel
             class="form-control"
+            required
             id="name"
-            #name
+            #name="ngModel"
           >
+        <div class="invalid" *ngIf="name.invalid && name.touched">This cannot be blank!</div>
+        <div class="valid" *ngIf="name.valid && name.touched">That's fine!</div>
       </div>
       <div class="col-3">
           <label
@@ -26,22 +29,37 @@
             type="number"
             name="quantity"
             class="form-control"
-            [(ngModel)]="item.quantity"
-            min="1"
+            ngModel
+            required
+            pattern="^[1-9]+[0-9]*$"
             id="quantity"
-            #quantity
+            #quantity="ngModel"
           >
+        <div class="invalid" *ngIf="quantity.invalid && quantity.touched">Seriously?</div>
+        <div class="valid" *ngIf="quantity.valid && quantity.touched">That's fine!</div>
       </div>
     </div>
     <div class="d-grid">
+      <div class="d-grid" [ngClass]="{'not-allowed': form.invalid}">
         <button
           type="submit"
           class="btn btn-success mb-3"
-          (click)="onAddItem()"
+          [disabled]="form.invalid"
         >
-          Add
+          {{ isEditingIngredient ? 'Edit' : 'Add' }}
         </button>
-        <button type="button" class="btn btn-danger mb-3">Delete</button>
-        <button type="button" class="btn btn-primary">Clear</button>
+      </div>
+
+        <button
+          type="button"
+          class="btn btn-danger mb-3"
+          [disabled]="!isEditingIngredient"
+          (click)="onItemDelete()"
+        >Delete</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onFormClear()"
+        >Clear</button>
     </div>
 </form>

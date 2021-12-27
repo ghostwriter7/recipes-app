@@ -1,2 +1,143 @@
-<p *ngIf="editMode" class="text-light">Edit!</p>
-<p *ngIf="!editMode" class="text-light">New!</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <div class="btn-group mb-3" role="group" aria-label="form buttons">
+    <button
+      type="submit"
+      class="btn btn-success"
+    >
+      {{ isEditMode ? 'Update' : 'Add' }}
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      [disabled]="form.pristine && !controls.controls.length"
+      (click)="onFormClear()"
+    >
+      Reset
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="mb-3">
+        <label
+          for="name"
+          class="form-label text-light"
+        >
+          Recipe
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="name"
+          id="name"
+        >
+        <div *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="invalid-data">You're dumb, I must
+          admit!
+        </div>
+        <div *ngIf="form.get('name')?.valid && form.get('name')?.touched" class="valid-data">You're so smart honey.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label
+          for="imagePath"
+          class="form-label text-light"
+        >
+          Image URL
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="imagePath"
+          id="imagePath"
+        >
+        <div *ngIf="form.get('imagePath')?.invalid && form.get('imagePath')?.touched" class="invalid-data">You're dumb,
+          I
+          must admit!
+        </div>
+        <div *ngIf="form.get('imagePath')?.valid && form.get('imagePath')?.touched" class="valid-data">You're so smart
+          honey.
+        </div>
+      </div>
+      <div class="mb-3">
+        <label
+          for="description"
+          class="form-label text-light"
+        >
+          Description
+        </label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="description"
+          formControlName="description"
+        ></textarea>
+        <div *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="invalid-data">You're
+          dumb, I must admit!
+        </div>
+        <div *ngIf="form.get('description')?.valid && form.get('description')?.touched" class="valid-data">You're so
+          smart
+          honey.
+        </div>
+      </div>
+      <div
+        class="mb-3"
+      >
+        <button
+          type="button"
+          class="btn btn-warning mb-3"
+          (click)="onAddIngredient()"
+        >
+          Add Ingredient
+        </button>
+        <div formArrayName="ingredients"
+             *ngFor="let control of controls.controls; let i = index"
+        >
+          <div [formGroupName]="i"
+          >
+            <div class="row my-2">
+              <div class="col-7">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">{{ i }}</span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [placeholder]="'Your ingredient nr. ' + i"
+                    formControlName="name"
+                  >
+                </div>
+              </div>
+              <div class="col-3">
+                <input
+                  type="number"
+                  class="form-control d-inline-block"
+                  formControlName="quantity"
+                >
+              </div>
+              <div class="col-2">
+                <button
+                  class="btn btn-danger"
+                  type="button"
+                  (click)="onIngredientRemove(i)"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <img
+        src="{{ imgPath }}"
+        alt=""
+        class="img-fluid mb-3 mb-sm-3 mb-md-0 mb-lg-0 img-thumbnail">
+    </div>
+  </div>
+
+</form>
+<ul class="list-group mt-3" *ngIf="false">
+  <li class="list-group-item">Recipe {{ data.name }}</li>
+  <li class="list-group-item">Description {{ data.description }}</li>
+</ul>

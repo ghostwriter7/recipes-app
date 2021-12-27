@@ -3,6 +3,7 @@ import { Subscription} from 'rxjs';
 
 import { Ingredient } from '../../shared/ingredients.model';
 import { ShoppingListService } from '../shopping-list.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -10,18 +11,23 @@ import { ShoppingListService } from '../shopping-list.service';
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  item: Ingredient = { name: '', quantity: 0 };
-  private subscription!: Subscription;
+  @ViewChild('form') form!: NgForm;
 
-  @ViewChild('name') name!: ElementRef;
-  @ViewChild('quantity') quantity!: ElementRef;
+  private index: number | null = null;
+  private subscription!: Subscription;
+  public isEditingIngredient: boolean = false;
 
   constructor(private shopService: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.subscription = this.shopService.itemClick.subscribe(item => {
-      this.item = item;
-    })
+    this.subscription = this.shopService.ingredientSelected.subscribe(number => {
+      if (number >= 0) {
+        const { name, quantity } = this.shopService.getIngredient(number);
+        this.form.setValue({name, quantity});
+        this.index = number;
+        this.isEditingIngredient = true;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -29,11 +35,36 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onAddItem() {
-    if ( this.name.nativeElement.value && this.quantity.nativeElement.value ) {
-      this.shopService.addToIngredients({
-        name: this.name.nativeElement.value,
-        quantity: +this.quantity.nativeElement.value
-      })
+    if (this.isEditingIngredient && typeof this.index === 'number') {
+      this.shopService.editIngredient({
+        name: this.form.value['name'],
+        quantity: this.form.value['quantity']
+      }, this.index)
+    } else {
+      this.shopService.addIngredients([{
+        name: this.form.value['name'],
+        quantity: this.form.value['quantity']
+      }]);
     }
+
+  this.init();
+  }
+
+  onItemDelete() {
+    if (typeof this.index === 'number' && this.index !== -1) {
+      this.shopService.deleteIngredient(this.index);
+    }
+    this.init();
+  }
+
+  onFormClear() {
+    this.init();
+    this.shopService.ingredientSelected.next(-1);
+  }
+
+  init() {
+    this.form.reset();
+    this.isEditingIngredient = false;
+    this.index = null;
   }
 }

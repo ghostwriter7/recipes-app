@@ -21,8 +21,7 @@ const routes: Routes = [
       { path: 'new', component: RecipeEditComponent },
       { path: ':id',
         component: RecipeDetailComponent,
-        canDeactivate: [CanDeactivateGuard],
-        resolve: {recipe: RecipeResolver}
+        // canDeactivate: [CanDeactivateGuard],
       },
       { path: ':id/edit', component: RecipeEditComponent}
     ] },
