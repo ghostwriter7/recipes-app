@@ -13,6 +13,8 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { RecipeEntryComponent } from './recipes/recipe-entry/recipe-entry.component';
+import { FilterPipe } from './shared/filter.pipe';
+import { SortPipe } from './shared/sort.pipe';
 
 import { DropdownDirective } from './shared/dropdown.directive';
 import { AppListHighlight} from './shared/listHighlight.directive';
@@ -32,6 +34,8 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     DropdownDirective,
     AppListHighlight,
     RecipeEditComponent,
+    FilterPipe,
+    SortPipe
   ],
   imports: [
     BrowserModule,

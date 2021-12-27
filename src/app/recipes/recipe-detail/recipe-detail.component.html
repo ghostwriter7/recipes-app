@@ -6,11 +6,16 @@
         <h1 class="bg-light p-2 ps-5 rounded shadow shadow-sm text-success text-uppercase"><span class="text-lowercase text-muted small">recipe name: </span> {{ recipe.name }}</h1>
         <p class="bg-secondary p-1 rounded shadow shadow-sm text-light lead px-3 ms-3" >Description: {{ recipe.description }}</p>
       <h4 class="text-muted bg-light px-3 py-2 rounded shadow shadow-sm my-3 d-inline-block">ingredients:</h4>
+      <button
+        type="button"
+        (click)="sort = !sort"
+        style="float: right; transform: translateY(50%);"
+        class="btn btn-warning">{{ sort ? 'A-Z' : 'Z-A' }}</button>
       <ul>
         <li
           class="list-group-item bg-secondary text-light text-uppercase"
           appListHighlight
-          *ngFor="let item of recipe.ingredients"
+          *ngFor="let item of recipe.ingredients | sort:sort"
         >
           {{ item.name }} ({{ item.quantity }})
         </li>

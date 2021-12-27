@@ -51,5 +51,6 @@ export class RecipeService {
 
   deleteRecipe(name: string) {
     this.recipes.splice((this.recipes.findIndex(recipe => recipe.name === name)), 1);
+    this.distributeRecipes.next(this.recipes.slice());
   }
 }

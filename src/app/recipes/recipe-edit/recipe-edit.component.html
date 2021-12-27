@@ -3,6 +3,7 @@
     <button
       type="submit"
       class="btn btn-success"
+      [disabled]="form.invalid"
     >
       {{ isEditMode ? 'Update' : 'Add' }}
     </button>

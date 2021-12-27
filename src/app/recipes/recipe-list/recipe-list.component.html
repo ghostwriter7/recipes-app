@@ -5,5 +5,33 @@
 </div>
 <hr>
 <div class="row g-1">
-    <app-recipe-item class="col-12 col-md-6 col-lg-4" *ngFor="let recipe of recipes" [recipe]="recipe"></app-recipe-item>
+  <div class="col-12 col-md-8">
+    <label
+      class="form-label text-light"
+      for="filterTerm"
+    >Filtering term:</label>
+    <input
+      type="text"
+      id="filterTerm"
+      [(ngModel)]="filterTerm"
+      class="form-control"
+    >
+  </div>
+  <div class="col-12 offset-2 col-md-2">
+    <div
+      class="form-check"
+      *ngFor="let option of options">
+      <input
+        class="form-check-input"
+        type="radio"
+        [(ngModel)]="filterTag"
+        [id]="option"
+        [value]="option"
+      >
+      <label
+        class="form-check-label text-light"
+        [for]="option">{{ option }}</label>
+    </div>
+  </div>
+    <app-recipe-item class="col-12 col-md-6 col-lg-4" *ngFor="let recipe of recipes | filter:filterTerm:filterTag" [recipe]="recipe"></app-recipe-item>
 </div>

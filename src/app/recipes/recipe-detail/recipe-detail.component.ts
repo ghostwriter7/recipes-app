@@ -18,6 +18,7 @@ export class RecipeDetailComponent implements OnInit, CanComponentDeactivate {
     imagePath: '',
     ingredients: []
   };
+  sort: boolean = false;
 
   addedToShoppingCart: boolean = false;
 
