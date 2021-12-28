@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Ingredient } from './ingredients.model';
+
 @Pipe({
   name: 'sort'
 })
