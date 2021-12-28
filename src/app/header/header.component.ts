@@ -11,7 +11,7 @@ export class HeaderComponent {
   constructor(private recipeService: RecipeService) {}
 
   onFetchData() {
-    this.recipeService.fetchRecipes();
+    this.recipeService.fetchRecipes().subscribe();
   }
 
   onSaveData() {

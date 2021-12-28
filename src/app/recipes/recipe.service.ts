@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Recipe } from './recipe.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Ingredient } from '../shared/ingredients.model';
-import { Subject } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
@@ -11,25 +11,39 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 export class RecipeService {
   public recipes: Recipe[] = [];
-
-  private URL: string = 'https://recipes-f4a4c-default-rtdb.europe-west1.firebasedatabase.app';
+  private readonly URL = 'https://recipes-f4a4c-default-rtdb.europe-west1.firebasedatabase.app';
 
   distributeRecipes = new Subject<Recipe[]>();
 
-  constructor(private shopService: ShoppingListService,
-              private http: HttpClient) {}
+  constructor(
+      private readonly shopService: ShoppingListService,
+      private readonly http: HttpClient
+  ) {}
 
   public saveRecipes() {
-    this.http.put(`${this.URL}/recipes.json`, this.recipes).subscribe(data => console.log(data));
+    this.http.put<Recipe[]>(`${this.URL}/recipes.json`, this.recipes).subscribe();
   }
 
-  public fetchRecipes() {
-    this.http.get<Recipe[]>(`${this.URL}/recipes.json`, {
+  public fetchRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.URL}/recipes.json`, {
       params: new HttpParams().set('print', 'pretty')
-    }).subscribe((recipes: Recipe[]) => {
-      this.distributeRecipes.next(recipes);
-      this.recipes = recipes;
     })
+    .pipe(map((recipes: Recipe[]) => {
+      return recipes.map(recipe => {
+        if (!recipe.hasOwnProperty('ingredients')) {
+          recipe['ingredients'] = [];
+        }
+        return recipe;
+      });
+    }),
+      tap(recipes => {
+        this.distributeRecipes.next(recipes);
+        this.recipes = recipes;
+      }))
+    // .subscribe((recipes: Recipe[]) => {
+    //   this.distributeRecipes.next(recipes);
+    //   this.recipes = recipes;
+    // });
   }
 
   getRecipe(name: string): Recipe {

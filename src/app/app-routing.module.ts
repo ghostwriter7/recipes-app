@@ -11,6 +11,7 @@ import { RecipeResolver } from './recipes/recipe-detail/recipe-resolver.service'
 import { RecipeEntryComponent } from './recipes/recipe-entry/recipe-entry.component';
 import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { RecipeResolverService } from './recipes/recipe-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
@@ -21,9 +22,12 @@ const routes: Routes = [
       { path: 'new', component: RecipeEditComponent },
       { path: ':id',
         component: RecipeDetailComponent,
+        resolve: [RecipeResolverService]
         // canDeactivate: [CanDeactivateGuard],
       },
-      { path: ':id/edit', component: RecipeEditComponent}
+      { path: ':id/edit', component: RecipeEditComponent,
+        resolve: [RecipeResolverService]
+      }
     ] },
   { path: 'shopping-list', component: ShoppingListComponent }
 ];
