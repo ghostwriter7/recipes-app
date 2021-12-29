@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RecipeService } from '../recipes/recipe.service';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   date: Date = new Date();
   private subscription!: Subscription;
   private timeSub!: Subscription;
-  public timeLeft!: Date;
   public isLoggedIn = false;
 
   constructor (

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, Subject, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 

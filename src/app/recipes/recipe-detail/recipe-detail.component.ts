@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
 import { ActivatedRoute, Router, Data, Params } from '@angular/router';
 import { CanComponentDeactivate } from './can-deactivate-guard.service';
 import { Observable } from 'rxjs';
