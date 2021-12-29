@@ -1,0 +1,92 @@
+<div
+  *ngIf="isLoading"
+  class="overlay">
+  <div class="lds-ripple"><div></div><div></div></div>
+</div>
+<div class="row">
+  <div class="mt-5 col-12 offset-md-3 col-md-6">
+    <div
+      *ngIf="error"
+      class="alert alert-danger position-relative">
+      <button class="btn btn-danger position-absolute"
+      style="right: 10px; top: 10px;"
+      (click)="error = null"
+      >Okay</button>
+      <p class="lead">{{ error }}</p>
+    </div>
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="mb-3">
+        <label
+          for="email"
+          class="form-label">
+          E-mail
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          id="email"
+          name="email"
+          ngModel
+          email
+          required
+          #email="ngModel"
+        >
+        <div
+          *ngIf="email.invalid && email.touched"
+          class="text-danger mt-2 small">
+          <p *ngIf="email.errors && email.errors['required']">This field cannot be empty</p>
+          <p *ngIf="email.errors && email.errors['email']">This does not look like a valid e-mail</p>
+        </div>
+        <div
+          *ngIf="email.valid && email.touched"
+          class="text-success mt-2 small">
+          That's correct!
+        </div>
+      </div>
+      <div class="mb-3">
+        <label
+          for="password"
+          class="form-label">
+          Password
+        </label>
+        <input
+          type="password"
+          class="form-control"
+          id="password"
+          name="password"
+          ngModel
+          required
+          minlength="6"
+          #password="ngModel"
+        >
+        <div
+          *ngIf="password.invalid && password.touched"
+          class="text-danger mt-2 small">
+          <p *ngIf="password.errors && password.errors['required']">This field cannot be empty</p>
+          <p *ngIf="password.errors && password.errors['minlength']">The password is too short</p>
+        </div>
+        <div
+          *ngIf="password.valid && password.touched"
+          class="text-success mt-2 small">
+          That's correct!
+        </div>
+      </div>
+      <div class="mb-3 btn-group">
+        <button
+          class="btn btn-success"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          {{ isSignUpForm ? 'Sign Up' : 'Login' }}
+        </button>
+        <button
+          class="btn btn-warning"
+          type="button"
+          (click)="isSignUpForm = !isSignUpForm"
+        >
+         Switch to {{ isSignUpForm ? 'Login' : 'Sign Up' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
