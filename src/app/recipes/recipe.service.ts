@@ -13,7 +13,6 @@ import { AuthService } from '../auth/auth.service';
 export class RecipeService {
   public recipes: Recipe[] = [];
   private readonly URL = 'https://recipes-f4a4c-default-rtdb.europe-west1.firebasedatabase.app';
-  private readonly token: string | null = null;
 
   distributeRecipes = new Subject<Recipe[]>();
 

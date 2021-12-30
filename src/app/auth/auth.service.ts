@@ -4,6 +4,8 @@ import { BehaviorSubject, catchError, Observable, Subject, tap, throwError } fro
 import { User } from './user.model';
 import { Router } from '@angular/router';
 
+import { environment } from '../../environments/environment';
+
 export interface AuthResponseData {
   kind?: string;
   idToken: string;
@@ -18,8 +20,8 @@ export interface AuthResponseData {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly signUpURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCEJeS0s7V-_Ard_EXTVEMI18cF4aENIws';
-  private readonly signInURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCEJeS0s7V-_Ard_EXTVEMI18cF4aENIws'
+  private readonly signUpURL = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${environment.firebase_key}`;
+  private readonly signInURL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.firebase_key}`
   private tokenExpirationTimer: any;
   public user = new BehaviorSubject<User | null>(null);
   public timer = new Subject<number>();
