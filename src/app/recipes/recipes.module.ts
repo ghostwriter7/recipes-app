@@ -10,8 +10,8 @@ import { RecipeDetailComponent } from './recipe-detail/recipe-detail.component';
 import { RecipeItemComponent } from './recipe-list/recipe-item/recipe-item.component';
 import { FilterPipe } from '../shared/filter.pipe';
 import { SortPipe } from '../shared/sort.pipe';
-import { DropdownDirective } from '../shared/dropdown.directive';
 import { RecipesRoutingModule } from './recipes-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -23,16 +23,14 @@ import { RecipesRoutingModule } from './recipes-routing.module';
     RecipeItemComponent,
     FilterPipe,
     SortPipe,
-    DropdownDirective
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RecipesRoutingModule,
+    SharedModule
   ],
-  exports: [
-    DropdownDirective
-  ]
+  exports: []
 })
 export class RecipesModule {}
